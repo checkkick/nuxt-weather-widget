@@ -3,7 +3,8 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiOpenWeather: '/api'
+      apiWeather: 'http://api.weatherapi.com/v1',
+      apiSecret: '46f4201fbffb4382b44104853242002'
     }
   },
 
@@ -22,4 +23,8 @@ export default defineNuxtConfig({
       link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     },
   },
+
+  modules: [
+    '@pinia/nuxt',
+  ],
 })
