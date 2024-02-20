@@ -15,12 +15,12 @@
       >Что-то пошло не так</p>
     </div>
 
-    <WeatherWidget v-if="errorCode === 0" />
+    <CurrentWeatherWidget v-if="errorCode === 0" />
   </main>
 </template>
 
 <script setup lang="ts">
-import WeatherWidget from '@/components/WeatherWidget/WeatherWidget.vue'
+import CurrentWeatherWidget from '@/components/WeatherWidget/CurrentWeatherWidget.vue'
 import FindCityForm from '@/components/Forms/FindCityForm.vue'
 import { weather } from '@/store/weather';
 
