@@ -7,7 +7,8 @@ export const api = async <K>(url: string, location: string, otherOptions = {}) =
     query: {
       key: config.public.apiSecret,
       q: location,
-      aqi: 'no'
+      aqi: 'no',
+      lang: 'ru'
     },
     retry: 0,
     ...otherOptions,
