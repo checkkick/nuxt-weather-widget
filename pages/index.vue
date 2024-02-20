@@ -4,7 +4,7 @@
 
     <FindCityForm @find-weather="findWeather" />
 
-    <div v-if="errorCode !== 0">
+    <div v-if="errorCode > 1">
       <p
         class="error"
         v-if="errorCode === 1003 || errorCode === 1006"
@@ -15,7 +15,7 @@
       >Что-то пошло не так</p>
     </div>
 
-    <WeatherWidget />
+    <WeatherWidget v-if="errorCode === 0" />
   </main>
 </template>
 

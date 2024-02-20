@@ -51,7 +51,7 @@ interface IState {
 export const weather = defineStore('weather', {
   state: (): IState => ({
     currentWeather: {},
-    errorCode: 0
+    errorCode: 1
   }),
 
   actions: {
