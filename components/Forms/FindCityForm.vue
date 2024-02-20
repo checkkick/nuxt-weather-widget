@@ -10,14 +10,24 @@
         placeholder="Москва"
         type="text"
         id="city"
+        v-model="input"
       />
     </div>
-    <button class="form__btn">Найти</button>
+    <button
+      class="form__btn"
+      @click="finderHandler"
+    >Найти</button>
   </div>
 </template>
 
 <script setup lang="ts">
+const emit = defineEmits(['findWeather'])
 
+const input = ref<string>('')
+
+function finderHandler() {
+  emit('findWeather', input.value)
+}
 </script>
 
 <style scoped>
