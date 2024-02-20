@@ -1,3 +1,5 @@
+import { weather } from "@/store/weather";
+
 export const api = async <K>(url: string, location: string, otherOptions = {}) => {
   const config = useRuntimeConfig();
 
@@ -11,7 +13,7 @@ export const api = async <K>(url: string, location: string, otherOptions = {}) =
     ...otherOptions,
 
     async onResponseError({ request, response, options }) {
-      return response._data.error.code
+      weather().CHANGE_ERROR_CODE(response._data.error.code)
     },
   })
 

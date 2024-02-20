@@ -45,24 +45,33 @@ interface ICurrentWeather {
 
 interface IState {
   currentWeather: ICurrentWeather
+  errorCode: number
 }
 
 export const weather = defineStore('weather', {
   state: (): IState => ({
     currentWeather: {},
+    errorCode: 0
   }),
 
   actions: {
+    CHANGE_ERROR_CODE(code: number) {
+      this.errorCode = code
+    },
+
     async GET_CURRENT_WEATHER(location: string) {
+      this.CHANGE_ERROR_CODE(0)
+
       const res = await api<ICurrentWeather>('/current.json', location, {
         method: 'GET',
       });
 
       this.currentWeather = res
-    },
+    }
   },
 
   getters: {
     CURRENT_WEATHER: (state) => state.currentWeather,
+    ERROR_CODE: (state) => state.errorCode,
   },
 });
