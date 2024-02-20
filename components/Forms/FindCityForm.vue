@@ -11,6 +11,7 @@
         type="text"
         id="city"
         v-model="input"
+        @keypress.enter="finderHandler"
       />
     </div>
     <button
