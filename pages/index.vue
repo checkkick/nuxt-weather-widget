@@ -17,7 +17,10 @@
 
     <CurrentWeatherWidget v-if="errorCode === 0" />
 
-    <div class="futureWeather">
+    <div
+      v-if="errorCode === 0"
+      class="futureWeather"
+    >
       <FutureWeatherWidget
         v-for="(item, idx) in futureWeather"
         :key="idx"
@@ -71,5 +74,4 @@ async function findWeather(city: string) {
   color: red;
   margin: 0;
   padding: 0;
-}
-</style>
+}</style>
