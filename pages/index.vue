@@ -32,7 +32,7 @@ import CurrentWeatherWidget from '@/components/WeatherWidget/CurrentWeatherWidge
 import FutureWeatherWidget from '@/components/WeatherWidget/FutureWeatherWidget.vue'
 import FindCityForm from '@/components/Forms/FindCityForm.vue'
 import { weather } from '@/store/weather';
-// v-for="(item, idx) in futureWeather.forecast?.forecastday" :key = "idx"
+
 const useWeatherStore = weather()
 
 const errorCode = computed(() => useWeatherStore.ERROR_CODE)
@@ -63,6 +63,7 @@ async function findWeather(city: string) {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
+  width: 100%;
 }
 
 .error {
