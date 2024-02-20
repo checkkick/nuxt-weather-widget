@@ -4,53 +4,46 @@ import { api } from '@/composables/api';
 interface ICurrentWeather {
   location?: {
     name: string
-    region: string
-    country: string
-    lat: number
-    lon: number
-    tz_id: string
-    localtime_epoch: number
     localtime: string
   }
   current?: {
-    last_updated_epoch: number
-    last_updated: string
     temp_c: number
-    temp_f: number
-    is_day: number
     condition: {
       text: string
       icon: string
-      code: number
     }
-    wind_mph: number
     wind_kph: number
-    wind_degree: number
-    wind_dir: string
-    pressure_mb: number
-    pressure_in: number
-    precip_mm: number
-    precip_in: number
     humidity: number
-    cloud: number
-    feelslike_c: number
-    feelslike_f: number
-    vis_km: number
-    vis_miles: number
-    uv: number
-    gust_mph: number
-    gust_kph: number
+  }
+}
+
+export interface IForecastDay {
+  date: string
+  day?: {
+    avgtemp_c: number
+    condition: {
+      text: string
+      icon: string
+    }
+  }
+}
+
+interface IFutureWeather {
+  forecast?: {
+    forecastday: IForecastDay[]
   }
 }
 
 interface IState {
   currentWeather: ICurrentWeather
+  futureWeather: IForecastDay[]
   errorCode: number
 }
 
 export const weather = defineStore('weather', {
   state: (): IState => ({
     currentWeather: {},
+    futureWeather: [],
     errorCode: 1
   }),
 
@@ -61,17 +54,46 @@ export const weather = defineStore('weather', {
 
     async GET_CURRENT_WEATHER(location: string) {
       this.CHANGE_ERROR_CODE(0)
+      const config = useRuntimeConfig();
 
-      const res = await api<ICurrentWeather>('/current.json', location, {
+      const res = await api<ICurrentWeather>('/current.json', {
         method: 'GET',
+        query: {
+          key: config.public.apiSecret,
+          q: location,
+          aqi: 'no',
+          lang: 'ru'
+        },
       });
 
       this.currentWeather = res
+    },
+    async GET_FUTURE_WEATHER(location: string) {
+      this.CHANGE_ERROR_CODE(0)
+      const config = useRuntimeConfig()
+
+      const res = await api<IFutureWeather>('/forecast.json', {
+        method: 'GET',
+        query: {
+          key: config.public.apiSecret,
+          q: location,
+          days: 4,
+          aqi: 'no',
+          lang: 'ru'
+        },
+      });
+
+      if (res.forecast?.forecastday) {
+        this.futureWeather = res.forecast?.forecastday
+          .filter(item =>
+            new Date(item.date).getDate() !== new Date().getDate())
+      }
     }
   },
 
   getters: {
     CURRENT_WEATHER: (state) => state.currentWeather,
+    FUTURE_WEATHER: (state) => state.futureWeather,
     ERROR_CODE: (state) => state.errorCode,
   },
 });

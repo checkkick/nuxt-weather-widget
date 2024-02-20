@@ -16,19 +16,31 @@
     </div>
 
     <CurrentWeatherWidget v-if="errorCode === 0" />
+
+    <div class="futureWeather">
+      <FutureWeatherWidget
+        v-for="(item, idx) in futureWeather"
+        :key="idx"
+        :weather="item"
+      />
+    </div>
   </main>
 </template>
 
 <script setup lang="ts">
 import CurrentWeatherWidget from '@/components/WeatherWidget/CurrentWeatherWidget.vue'
+import FutureWeatherWidget from '@/components/WeatherWidget/FutureWeatherWidget.vue'
 import FindCityForm from '@/components/Forms/FindCityForm.vue'
 import { weather } from '@/store/weather';
-
+// v-for="(item, idx) in futureWeather.forecast?.forecastday" :key = "idx"
 const useWeatherStore = weather()
+
 const errorCode = computed(() => useWeatherStore.ERROR_CODE)
+const futureWeather = computed(() => useWeatherStore.FUTURE_WEATHER)
 
 async function findWeather(city: string) {
   await useWeatherStore.GET_CURRENT_WEATHER(city)
+  await useWeatherStore.GET_FUTURE_WEATHER(city)
 }
 </script>
 
@@ -45,6 +57,12 @@ async function findWeather(city: string) {
   font-size: 36px;
   margin: 0;
   padding: 0;
+}
+
+.futureWeather {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
 }
 
 .error {
