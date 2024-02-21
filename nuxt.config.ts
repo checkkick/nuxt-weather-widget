@@ -12,7 +12,7 @@ export default defineNuxtConfig({
     head: {
       title: 'Nuxt Sono Weather Widget',
       htmlAttrs: {
-        lang: 'en',
+        lang: 'ru',
       },
       meta: [
         { charset: 'utf-8' },
