@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-sono-weather-widget",
+  "name": "nuxt-weather-widget",
   "private": true,
   "type": "module",
   "scripts": {
